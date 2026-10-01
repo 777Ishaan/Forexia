@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Forexia - Transactions</title>
+
+
+    <!-- Google Font -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+
+    <!-- Font Awesome -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Shared Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        /* =========================================================
+           FOREXIA DARK THEME
+        ========================================================= */
+
+        :root {
+
+            --bg-main: #08080d;
+
+            --surface: #111119;
+
+            --surface-hover: #151520;
+
+            --border: rgba(255,255,255,0.08);
+
+            --border-hover: rgba(118,87,255,0.35);
+
+            --primary: #7657ff;
+
+            --primary-light: #8b72ff;
+
+            --primary-dark: #6042e8;
+
+            --text-main: #f5f5f7;
+
+            --text-secondary: #b0b0bd;
+
+            --text-muted: #707080;
+
+            --success: #22c55e;
+
+            --danger: #ef4444;
+
+            --warning: #f59e0b;
+
+            --radius: 16px;
+
+            --shadow:
+                0 10px 30px rgba(0,0,0,0.35);
+
+        }
+
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+            font-family: "Inter", sans-serif;
+
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 80% 0%,
+                    rgba(118,87,255,0.08),
+                    transparent 30%
+                ),
+                var(--bg-main);
+
+            color: var(--text-main);
+
+            line-height: 1.6;
+
+        }
+
+
+        button,
+        input {
+
+            font-family: inherit;
+
+        }
+
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .navbar {
+
+            height: 74px;
+
+            padding: 0 5%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+            background:
+                rgba(8,8,13,0.88);
+
+            border-bottom:
+                1px solid var(--border);
+
+            backdrop-filter: blur(18px);
+
+        }
+
+
+        .logo img {
+
+            height: 38px;
+
+            width: auto;
+
+        }
+
+
+        .nav-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+
+        #userEmail {
+
+            color: var(--text-secondary);
+
+            font-size: 0.82rem;
+
+            margin-right: 12px;
+
+        }
+
+
+        .nav-right button {
+
+            padding: 9px 13px;
+
+            border-radius: 9px;
+
+            border: 1px solid transparent;
+
+            background: transparent;
+
+            color: var(--text-secondary);
+
+            font-size: 0.83rem;
+
+            font-weight: 500;
+
+            cursor: pointer;
+
+            transition: all 0.25s ease;
+
+        }
+
+
+        .nav-right button:hover {
+
+            color: white;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            border-color:
+                var(--border);
+
+        }
+
+
+        /* Dashboard */
+
+        .nav-right button:first-of-type {
+
+            color: white;
+
+            background:
+                rgba(118,87,255,0.14);
+
+            border-color:
+                rgba(118,87,255,0.25);
+
+        }
+
+
+        /* Logout */
+
+        .nav-right button:last-child {
+
+            margin-left: 5px;
+
+            color: #f87171;
+
+            background:
+                rgba(239,68,68,0.1);
+
+            border-color:
+                rgba(239,68,68,0.2);
+
+        }
+
+
+        .nav-right button:last-child:hover {
+
+            background: var(--danger);
+
+            color: white;
+
+        }
+
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        .dashboard {
+
+            max-width: 1350px;
+
+            margin: 0 auto;
+
+            padding:
+                45px 32px
+                80px;
+
+        }
+
+
+        /* =========================================================
+           PAGE HEADER
+        ========================================================= */
+
+        .page-header {
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .page-header h1 {
+
+            font-size: 2rem;
+
+            font-weight: 700;
+
+            letter-spacing: -0.6px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .welcome {
+
+            color: var(--text-muted);
+
+            font-size: 0.9rem;
+
+        }
+
+
+        /* =========================================================
+           SECTION
+        ========================================================= */
+
+        .wallet-section {
+
+            margin-bottom: 45px;
+
+        }
+
+
+        .transaction-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .transaction-header h2 {
+
+            font-size: 1.15rem;
+
+            font-weight: 600;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .transaction-header p {
+
+            color: var(--text-muted);
+
+            font-size: 0.82rem;
+
+        }
+
+
+        /* =========================================================
+           FILTERS
+        ========================================================= */
+
+        .transaction-filters {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            margin-bottom: 18px;
+
+            padding: 5px;
+
+            width: fit-content;
+
+            max-width: 100%;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 11px;
+
+        }
+
+
+        .transaction-filters button {
+
+            padding: 8px 14px;
+
+            border: 1px solid transparent;
+
+            background: transparent;
+
+            color: var(--text-muted);
+
+            border-radius: 7px;
+
+            font-size: 0.75rem;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: all 0.2s ease;
+
+        }
+
+
+        .transaction-filters button:hover {
+
+            color: white;
+
+            background:
+                rgba(255,255,255,0.05);
+
+        }
+
+
+        .transaction-filters button:first-child {
+
+            color: white;
+
+            background: var(--primary);
+
+            box-shadow:
+                0 4px 14px
+                rgba(118,87,255,0.25);
+
+        }
+
+
+        /* =========================================================
+           SEARCH
+        ========================================================= */
+
+        .transaction-search {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+            margin-bottom: 18px;
+
+            padding: 16px 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.035),
+                    rgba(255,255,255,0.012)
+                );
+
+            border:
+                1px solid var(--border);
+
+            border-radius: var(--radius);
+
+        }
+
+
+        .transaction-search-title {
+
+            color: var(--text-secondary);
+
+            font-size: 0.8rem;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+        }
+
+
+        .transaction-search input {
+
+            flex: 1;
+
+            min-width: 200px;
+
+            padding: 10px 13px;
+
+            background: #0b0b11;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            color: var(--text-main);
+
+            outline: none;
+
+            font-size: 0.8rem;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+
+        }
+
+
+        .transaction-search input::placeholder {
+
+            color: #555563;
+
+        }
+
+
+        .transaction-search input:focus {
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(118,87,255,0.1);
+
+        }
+
+
+        /* =========================================================
+           TABLE
+        ========================================================= */
+
+        .transaction-table-container {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.035),
+                    rgba(255,255,255,0.01)
+                );
+
+            border:
+                1px solid var(--border);
+
+            border-radius: var(--radius);
+
+            box-shadow: var(--shadow);
+
+        }
+
+
+        .transaction-table {
+
+            width: 100%;
+
+            min-width: 950px;
+
+            border-collapse: collapse;
+
+            text-align: left;
+
+        }
+
+
+        .transaction-table th {
+
+            padding: 15px 18px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            color: var(--text-muted);
+
+            font-size: 0.68rem;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.7px;
+
+            white-space: nowrap;
+
+            border-bottom:
+                1px solid var(--border);
+
+        }
+
+
+        .transaction-table td {
+
+            padding: 15px 18px;
+
+            color: var(--text-secondary);
+
+            font-size: 0.78rem;
+
+            border-bottom:
+                1px solid var(--border);
+
+            white-space: nowrap;
+
+        }
+
+
+        .transaction-table tbody tr {
+
+            transition:
+                background 0.2s ease;
+
+        }
+
+
+        .transaction-table tbody tr:hover {
+
+            background:
+                rgba(118,87,255,0.045);
+
+        }
+
+
+        .transaction-table tbody tr:last-child td {
+
+            border-bottom: none;
+
+        }
+
+
+        /* =========================================================
+           TRANSACTION TYPES
+        ========================================================= */
+
+        .transaction-type {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            padding: 5px 9px;
+
+            border-radius: 6px;
+
+            font-size: 0.68rem;
+
+            font-weight: 600;
+
+        }
+
+
+        .transaction-type.deposit {
+
+            color: #4ade80;
+
+            background:
+                rgba(34,197,94,0.1);
+
+        }
+
+
+        .transaction-type.withdraw {
+
+            color: #f87171;
+
+            background:
+                rgba(239,68,68,0.1);
+
+        }
+
+
+        .transaction-type.conversion {
+
+            color: var(--primary-light);
+
+            background:
+                rgba(118,87,255,0.12);
+
+        }
+
+
+        .transaction-type.transfer {
+
+            color: #fbbf24;
+
+            background:
+                rgba(245,158,11,0.1);
+
+        }
+
+
+        /* =========================================================
+           MESSAGE / EMPTY STATE
+        ========================================================= */
+
+        .empty-message {
+
+            padding: 35px;
+
+            text-align: center;
+
+            color: var(--text-muted);
+
+            font-size: 0.82rem;
+
+        }
+
+
+        #transactionMessage {
+
+            min-height: 20px;
+
+        }
+
+
+        /* =========================================================
+           SCROLLBAR
+        ========================================================= */
+
+        ::-webkit-scrollbar {
+
+            width: 7px;
+
+            height: 7px;
+
+        }
+
+
+        ::-webkit-scrollbar-track {
+
+            background: var(--bg-main);
+
+        }
+
+
+        ::-webkit-scrollbar-thumb {
+
+            background: #292936;
+
+            border-radius: 10px;
+
+        }
+
+
+        ::-webkit-scrollbar-thumb:hover {
+
+            background: var(--primary);
+
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .navbar {
+
+                padding: 0 25px;
+
+            }
+
+
+            #userEmail {
+
+                display: none;
+
+            }
+
+
+            .nav-right {
+
+                gap: 3px;
+
+            }
+
+
+            .nav-right button {
+
+                padding: 8px 10px;
+
+            }
+
+        }
+
+
+        @media (max-width: 768px) {
+
+            .navbar {
+
+                height: auto;
+
+                min-height: 70px;
+
+                padding: 12px 18px;
+
+                flex-wrap: wrap;
+
+                gap: 12px;
+
+            }
+
+
+            .nav-right {
+
+                width: 100%;
+
+                justify-content: center;
+
+                flex-wrap: wrap;
+
+            }
+
+
+            .dashboard {
+
+                padding:
+                    32px 18px
+                    60px;
+
+            }
+
+
+            .page-header h1 {
+
+                font-size: 1.65rem;
+
+            }
+
+
+            .transaction-search {
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 10px;
+
+            }
+
+
+            .transaction-search input {
+
+                min-width: 0;
+
+                width: 100%;
+
+            }
+
+
+            .transaction-filters {
+
+                width: 100%;
+
+            }
+
+
+            .transaction-filters button {
+
+                flex: 1;
+
+                min-width: 90px;
+
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .nav-right button {
+
+                font-size: 0.72rem;
+
+                padding: 7px 8px;
+
+            }
+
+
+            .transaction-filters {
+
+                gap: 4px;
+
+            }
+
+
+            .transaction-filters button {
+
+                font-size: 0.68rem;
+
+                padding: 7px 8px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         NAVBAR
+    ========================================================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            <img
+                src="images/forexia-logo.png"
+                alt="Forexia">
+        </div>
+
+        <button class="nav-toggle-btn" onclick="const n=document.getElementById('navRight'); if(n) n.classList.toggle('mobile-open');" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="nav-right" id="navRight">
+
+            <span id="userEmail"></span>
+
+            <button onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-chart-line"></i>
+                Dashboard
+            </button>
+
+            <button onclick="window.location.href='wallet.html'">
+                <i class="fas fa-wallet"></i>
+                Wallet
+            </button>
+
+            <button onclick="window.location.href='transactions.html'" class="active-nav">
+                <i class="fas fa-list"></i>
+                Transactions
+            </button>
+
+            <button onclick="window.location.href='profile.html'">
+                <i class="fas fa-user"></i>
+                Profile
+            </button>
+
+            <button onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================================================
+         TRANSACTION HISTORY
+    ========================================================= -->
+
+    <main class="dashboard">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <h1>
+                Transaction History
+            </h1>
+
+
+            <p class="welcome">
+                View all your wallet activity
+            </p>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             TRANSACTIONS
+        ====================================================== -->
+
+        <section class="wallet-section">
+
+
+            <!-- HEADER -->
+
+            <div class="transaction-header">
+
+                <div>
+
+                    <h2>
+                        Transactions
+                    </h2>
+
+                    <p>
+                        Your recent deposits, withdrawals,
+                        conversions and money transfers
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 FILTERS
+            ================================================== -->
+
+            <div class="transaction-filters">
+
+
+                <button
+                    onclick="filterTransactions('ALL')">
+
+                    <i class="fas fa-layer-group"></i>
+                    All
+
+                </button>
+
+
+                <button
+                    onclick="filterTransactions('DEPOSIT')">
+
+                    <i class="fas fa-arrow-down"></i>
+                    Deposits
+
+                </button>
+
+
+                <button
+                    onclick="filterTransactions('WITHDRAW')">
+
+                    <i class="fas fa-arrow-up"></i>
+                    Withdrawals
+
+                </button>
+
+
+                <button
+                    onclick="filterTransactions('CONVERSION')">
+
+                    <i class="fas fa-right-left"></i>
+                    Conversions
+
+                </button>
+
+
+                <button
+                    onclick="filterTransactions('TRANSFER_SENT')">
+
+                    <i class="fas fa-paper-plane"></i>
+                    Sent
+
+                </button>
+
+
+                <button
+                    onclick="filterTransactions('TRANSFER_RECEIVED')">
+
+                    <i class="fas fa-inbox"></i>
+                    Received
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SEARCH
+            ================================================== -->
+
+            <div class="transaction-search">
+
+
+                <div class="transaction-search-title">
+
+                    <i class="fas fa-search"></i>
+
+                    Search transactions
+
+                </div>
+
+
+                <input
+                    type="text"
+                    id="transactionSearch"
+                    placeholder="Search by currency, type, details..."
+                    autocomplete="off">
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 TABLE
+            ================================================== -->
+
+            <div class="transaction-table-container">
+
+
+                <table class="transaction-table">
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Details
+                            </th>
+
+                            <th>
+                                From
+                            </th>
+
+                            <th>
+                                To
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Rate
+                            </th>
+
+                            <th>
+                                Converted
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="transactionBody">
+
+                        <!--
+                            Transactions are loaded
+                            by transactions.js
+                        -->
+
+                    </tbody>
+
+
+                </table>
+
+            </div>
+
+
+
+            <!-- MESSAGE -->
+
+            <p
+                id="transactionMessage"
+                class="empty-message">
+            </p>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script src="js/api.js"></script>
+
+    <script src="js/transactions.js"></script>
+
+
+</body>
+
+</html>

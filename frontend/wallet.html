@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Forexia - Wallet</title>
+
+
+    <!-- Google Font -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Shared Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* =========================================================
+           FOREXIA DARK THEME
+        ========================================================= */
+
+        :root {
+
+            --bg-main: #08080d;
+            --bg-secondary: #0d0d14;
+
+            --surface: #111119;
+            --surface-hover: #151520;
+
+            --border: rgba(255, 255, 255, 0.08);
+
+            --primary: #7657ff;
+            --primary-light: #8b72ff;
+            --primary-dark: #6042e8;
+
+            --text-main: #f5f5f7;
+            --text-secondary: #b0b0bd;
+            --text-muted: #707080;
+
+            --success: #22c55e;
+            --danger: #ef4444;
+
+            --radius: 16px;
+
+            --shadow:
+                0 10px 30px rgba(0, 0, 0, 0.35);
+
+            --glow:
+                0 0 30px rgba(118, 87, 255, 0.12);
+        }
+
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+
+            margin: 0;
+            padding: 0;
+
+            box-sizing: border-box;
+
+            font-family: "Inter", sans-serif;
+
+        }
+
+
+        body {
+
+            background:
+                radial-gradient(circle at 80% 0%,
+                    rgba(118, 87, 255, 0.08),
+                    transparent 30%),
+                var(--bg-main);
+
+            color: var(--text-main);
+
+            min-height: 100vh;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .navbar {
+
+            height: 74px;
+
+            background:
+                rgba(8, 8, 13, 0.88);
+
+            border-bottom:
+                1px solid var(--border);
+
+            padding:
+                0 5%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+            backdrop-filter: blur(18px);
+
+        }
+
+
+        .logo img {
+
+            height: 38px;
+
+            width: auto;
+
+        }
+
+
+        .nav-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+
+        #userEmail {
+
+            color: var(--text-secondary);
+
+            font-size: 0.85rem;
+
+            margin-right: 14px;
+
+        }
+
+
+        .nav-right button {
+
+            background: transparent;
+
+            border:
+                1px solid transparent;
+
+            color: var(--text-secondary);
+
+            padding:
+                9px 13px;
+
+            border-radius: 9px;
+
+            font-size: 0.85rem;
+
+            font-weight: 500;
+
+            cursor: pointer;
+
+            transition:
+                all 0.25s ease;
+
+        }
+
+
+        .nav-right button:hover {
+
+            color: white;
+
+            background:
+                rgba(255, 255, 255, 0.05);
+
+            border-color:
+                var(--border);
+
+        }
+
+
+        /* Active dashboard */
+
+        .nav-right button:first-of-type {
+
+            color: white;
+
+            background:
+                rgba(118, 87, 255, 0.14);
+
+            border-color:
+                rgba(118, 87, 255, 0.25);
+
+        }
+
+
+        /* Logout */
+
+        .nav-right button:last-child {
+
+            background:
+                rgba(239, 68, 68, 0.1);
+
+            color: #f87171;
+
+            border-color:
+                rgba(239, 68, 68, 0.2);
+
+            margin-left: 5px;
+
+        }
+
+
+        .nav-right button:last-child:hover {
+
+            background: var(--danger);
+
+            color: white;
+
+            border-color: var(--danger);
+
+        }
+
+
+        /* =========================================================
+           MAIN DASHBOARD
+        ========================================================= */
+
+        .dashboard {
+
+            max-width: 1280px;
+
+            margin: 0 auto;
+
+            padding:
+                42px 32px 70px;
+
+        }
+
+
+        /* =========================================================
+           PAGE HEADER
+        ========================================================= */
+
+        .page-header {
+
+            margin-bottom: 36px;
+
+        }
+
+
+        .page-header-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+        }
+
+
+        .page-header h1 {
+
+            font-size: 2rem;
+
+            font-weight: 700;
+
+            letter-spacing: -0.6px;
+
+            color: var(--text-main);
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .welcome {
+
+            color: var(--text-muted);
+
+            font-size: 0.9rem;
+
+        }
+
+
+        /* =========================================================
+           WALLET OVERVIEW CARD
+        ========================================================= */
+
+        .wallet-overview {
+
+            background:
+                linear-gradient(135deg,
+                    rgba(118, 87, 255, 0.17),
+                    rgba(118, 87, 255, 0.035));
+
+            border:
+                1px solid rgba(118, 87, 255, 0.25);
+
+            border-radius: var(--radius);
+
+            padding: 25px;
+
+            margin-bottom: 42px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            box-shadow:
+                var(--shadow),
+                var(--glow);
+
+        }
+
+
+        .wallet-overview::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+
+            height: 180px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(118, 87, 255, 0.12);
+
+            right: -60px;
+
+            top: -80px;
+
+            filter: blur(5px);
+
+        }
+
+
+        .wallet-overview-label {
+
+            color: var(--text-secondary);
+
+            font-size: 0.78rem;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.8px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .wallet-overview-title {
+
+            font-size: 1.1rem;
+
+            font-weight: 600;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .wallet-overview-icon {
+
+            width: 45px;
+
+            height: 45px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background:
+                rgba(118, 87, 255, 0.18);
+
+            color: var(--primary-light);
+
+            font-size: 1.1rem;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        /* =========================================================
+           SECTION
+        ========================================================= */
+
+        .wallet-section {
+
+            margin-bottom: 48px;
+
+        }
+
+
+        .section-header {
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .section-header h2 {
+
+            font-size: 1.15rem;
+
+            font-weight: 600;
+
+            color: var(--text-main);
+
+            margin-bottom: 3px;
+
+        }
+
+
+        .section-header p {
+
+            color: var(--text-muted);
+
+            font-size: 0.82rem;
+
+        }
+
+
+        /* =========================================================
+           BALANCES
+        ========================================================= */
+
+        .balances-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit,
+                    minmax(250px, 1fr));
+
+            gap: 16px;
+
+        }
+
+
+        /* =========================================================
+           BALANCE CARD
+
+           wallet.js can continue injecting
+           its existing balance elements
+        ========================================================= */
+
+        .balance-card {
+
+            position: relative;
+
+            background:
+                linear-gradient(145deg,
+                    rgba(255, 255, 255, 0.035),
+                    rgba(255, 255, 255, 0.012));
+
+            border:
+                1px solid var(--border);
+
+            border-radius: var(--radius);
+
+            padding: 23px;
+
+            min-height: 170px;
+
+            box-shadow: var(--shadow);
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
+
+        }
+
+
+        .balance-card:hover {
+
+            transform:
+                translateY(-4px);
+
+            border-color:
+                rgba(118, 87, 255, 0.35);
+
+            background:
+                var(--surface-hover);
+
+            box-shadow:
+                var(--shadow),
+                var(--glow);
+
+        }
+
+
+        .balance-icon {
+
+            width: 44px;
+
+            height: 44px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                rgba(118, 87, 255, 0.12);
+
+            color:
+                var(--primary-light);
+
+            margin-bottom: 16px;
+
+        }
+
+
+        .balance-currency {
+
+            color:
+                var(--text-secondary);
+
+            font-size: 0.78rem;
+
+            font-weight: 600;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .balance-amount {
+
+            color:
+                var(--text-main);
+
+            font-size: 1.6rem;
+
+            font-weight: 700;
+
+        }
+
+
+        .balance-subtitle {
+
+            color:
+                var(--text-muted);
+
+            font-size: 0.75rem;
+
+            margin-top: 4px;
+
+        }
+
+
+        /* =========================================================
+           EMPTY STATE
+        ========================================================= */
+
+        .empty-message {
+
+            width: 100%;
+
+            grid-column: 1 / -1;
+
+            text-align: center;
+
+            padding: 50px 20px;
+
+            color:
+                var(--text-muted);
+
+            background:
+                rgba(255, 255, 255, 0.02);
+
+            border:
+                1px dashed var(--border);
+
+            border-radius:
+                var(--radius);
+
+            font-size: 0.85rem;
+
+        }
+
+
+        /* =========================================================
+           SCROLLBAR
+        ========================================================= */
+
+        ::-webkit-scrollbar {
+
+            width: 7px;
+
+        }
+
+
+        ::-webkit-scrollbar-track {
+
+            background:
+                var(--bg-main);
+
+        }
+
+
+        ::-webkit-scrollbar-thumb {
+
+            background:
+                #292936;
+
+            border-radius:
+                10px;
+
+        }
+
+
+        ::-webkit-scrollbar-thumb:hover {
+
+            background:
+                var(--primary);
+
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1000px) {
+
+            .navbar {
+
+                padding:
+                    0 25px;
+
+            }
+
+
+            .nav-right {
+
+                gap: 3px;
+
+            }
+
+
+            #userEmail {
+
+                display: none;
+
+            }
+
+
+            .nav-right button {
+
+                padding:
+                    8px 9px;
+
+            }
+
+        }
+
+
+        @media (max-width: 768px) {
+
+            .navbar {
+
+                height: auto;
+
+                min-height: 70px;
+
+                padding:
+                    12px 18px;
+
+                flex-wrap: wrap;
+
+                gap: 12px;
+
+            }
+
+
+            .nav-right {
+
+                width: 100%;
+
+                justify-content: center;
+
+                flex-wrap: wrap;
+
+            }
+
+
+            .nav-right button {
+
+                font-size: 0.72rem;
+
+            }
+
+
+            .dashboard {
+
+                padding:
+                    30px 18px 50px;
+
+            }
+
+
+            .page-header h1 {
+
+                font-size: 1.6rem;
+
+            }
+
+
+            .page-header-top {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .nav-right button i {
+
+                display: none;
+
+            }
+
+
+            .nav-right button {
+
+                padding:
+                    7px 8px;
+
+            }
+
+
+            .balances-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         NAVBAR
+    ========================================================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            <img src="images/forexia-logo.png" alt="Forexia">
+        </div>
+
+        <button class="nav-toggle-btn" onclick="const n=document.getElementById('navRight'); if(n) n.classList.toggle('mobile-open');" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="nav-right" id="navRight">
+
+            <span id="userEmail"></span>
+
+            <button onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-chart-line"></i>
+                Dashboard
+            </button>
+
+            <button onclick="window.location.href='wallet.html'" class="active-nav">
+                <i class="fas fa-wallet"></i>
+                Wallet
+            </button>
+
+            <button onclick="window.location.href='transactions.html'">
+                <i class="fas fa-list"></i>
+                Transactions
+            </button>
+
+            <button onclick="window.location.href='profile.html'">
+                <i class="fas fa-user"></i>
+                Profile
+            </button>
+
+            <button onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================================================
+         WALLET
+    ========================================================= -->
+
+    <main class="dashboard">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <div class="page-header-top">
+
+                <div>
+
+                    <h1>
+                        Wallet
+                    </h1>
+
+                    <p class="welcome">
+                        View and manage your available balances.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             WALLET OVERVIEW
+        ====================================================== -->
+
+        <section class="wallet-overview">
+
+
+            <div class="wallet-overview-icon">
+
+                <i class="fas fa-wallet"></i>
+
+            </div>
+
+
+            <div class="wallet-overview-label">
+
+                Forexia Wallet
+
+            </div>
+
+
+            <div class="wallet-overview-title">
+
+                Your currencies at a glance
+
+            </div>
+
+
+            <p style="
+                    color: var(--text-muted);
+                    font-size: 0.8rem;
+                    max-width: 600px;
+                ">
+
+                Manage your supported currencies and keep track
+                of your available funds in one place.
+
+            </p>
+
+
+        </section>
+
+
+
+        <!-- =====================================================
+             BALANCES
+        ====================================================== -->
+
+        <section class="wallet-section">
+
+
+            <div class="section-header">
+
+                <h2>
+                    Your Balances
+                </h2>
+
+                <p>
+                    Money available in each currency
+                </p>
+
+            </div>
+
+
+            <div id="balances" class="balances-grid">
+
+
+                <p class="empty-message">
+
+                    <i class="fas fa-spinner fa-spin" style="
+                            margin-right: 7px;
+                            color: var(--primary-light);
+                        ">
+                    </i>
+
+                    Loading balances...
+
+                </p>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script src="js/api.js"></script>
+
+    <script src="js/wallet.js"></script>
+
+
+</body>
+
+</html>

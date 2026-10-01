@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Forexia - Send Money</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            <img src="images/forexia-logo.png" alt="Forexia">
+        </div>
+
+        <button class="nav-toggle-btn" onclick="const n=document.getElementById('navRight'); if(n) n.classList.toggle('mobile-open');" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="nav-right" id="navRight">
+
+            <span id="userEmail"></span>
+
+            <button onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-chart-line"></i>
+                Dashboard
+            </button>
+
+            <button onclick="window.location.href='wallet.html'">
+                <i class="fas fa-wallet"></i>
+                Wallet
+            </button>
+
+            <button onclick="window.location.href='transactions.html'">
+                <i class="fas fa-list"></i>
+                Transactions
+            </button>
+
+            <button onclick="window.location.href='profile.html'">
+                <i class="fas fa-user"></i>
+                Profile
+            </button>
+
+            <button onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================
+         SEND MONEY
+    ========================== -->
+
+    <main class="dashboard">
+
+
+        <h1>
+            Send Money
+        </h1>
+
+
+        <p class="welcome">
+            Transfer money to another Forexia user
+        </p>
+
+
+
+        <section class="actions-grid">
+
+
+            <div class="card">
+
+
+                <h2>
+                    Send Money
+                </h2>
+
+
+                <p>
+                    Enter the receiver's email,
+                    currency and amount.
+                </p>
+
+
+
+                <!-- RECEIVER -->
+
+                <input
+                    type="email"
+                    id="receiverEmail"
+                    placeholder="Receiver Email"
+                >
+
+
+
+                <!-- CURRENCY -->
+
+                <select id="transferCurrency">
+
+                    <option value="INR">
+                        INR
+                    </option>
+
+                    <option value="USD">
+                        USD
+                    </option>
+
+                    <option value="EUR">
+                        EUR
+                    </option>
+
+                    <option value="GBP">
+                        GBP
+                    </option>
+
+                </select>
+
+
+
+                <!-- AMOUNT -->
+
+                <input
+                    type="number"
+                    id="transferAmount"
+                    placeholder="Amount"
+                    min="0"
+                    step="0.01"
+                >
+
+
+
+                <!-- SEND BUTTON -->
+
+                <button
+                    id="sendMoneyButton"
+                    onclick="sendMoney()"
+                >
+                    Send Money
+                </button>
+
+
+
+                <!-- MESSAGE -->
+
+                <p id="message"></p>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="js/api.js"></script>
+
+    <script src="js/send-money.js"></script>
+
+
+</body>
+
+</html>

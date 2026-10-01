@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Forexia - Dashboard</title>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Shared Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Chart.js CDN for Live Interactive Visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        /* =========================================================
+           FOREXIA DARK THEME
+        ========================================================= */
+
+        :root {
+            --bg-main: #08080d;
+            --bg-secondary: #0d0d14;
+            --surface: #111119;
+            --surface-hover: #151520;
+
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(124, 92, 255, 0.35);
+
+            --primary: #7657ff;
+            --primary-light: #8b72ff;
+            --primary-dark: #6042e8;
+
+            --text-main: #f5f5f7;
+            --text-secondary: #b0b0bd;
+            --text-muted: #707080;
+
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+
+            --radius: 16px;
+
+            --shadow:
+                0 10px 30px rgba(0, 0, 0, 0.35);
+
+            --glow:
+                0 0 30px rgba(118, 87, 255, 0.12);
+        }
+
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+        }
+
+
+        body {
+            background:
+                radial-gradient(
+                    circle at 80% 0%,
+                    rgba(118, 87, 255, 0.08),
+                    transparent 30%
+                ),
+                var(--bg-main);
+
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+
+        button,
+        select {
+            font-family: inherit;
+        }
+
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .navbar {
+            height: 74px;
+
+            background: rgba(8, 8, 13, 0.88);
+
+            border-bottom: 1px solid var(--border);
+
+            padding: 0 5%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            position: sticky;
+            top: 0;
+
+            z-index: 100;
+
+            backdrop-filter: blur(18px);
+        }
+
+
+        .logo img {
+            height: 38px;
+            width: auto;
+        }
+
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        #userEmail {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-right: 14px;
+        }
+
+
+        .nav-right button {
+            background: transparent;
+
+            border: 1px solid transparent;
+
+            color: var(--text-secondary);
+
+            padding: 9px 13px;
+
+            border-radius: 9px;
+
+            font-size: 0.85rem;
+            font-weight: 500;
+
+            cursor: pointer;
+
+            transition: all 0.25s ease;
+        }
+
+
+        .nav-right button i {
+            margin-right: 6px;
+        }
+
+
+        .nav-right button:hover {
+            color: white;
+
+            background: rgba(255, 255, 255, 0.05);
+
+            border-color: var(--border);
+        }
+
+
+        .nav-right button:first-of-type {
+            color: white;
+
+            background: rgba(118, 87, 255, 0.14);
+
+            border-color: rgba(118, 87, 255, 0.25);
+        }
+
+
+        .nav-right button:last-child {
+            background: rgba(239, 68, 68, 0.1);
+
+            color: #f87171;
+
+            border-color: rgba(239, 68, 68, 0.2);
+
+            margin-left: 5px;
+        }
+
+
+        .nav-right button:last-child:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+
+        /* =========================================================
+           DASHBOARD
+        ========================================================= */
+
+        .dashboard {
+            max-width: 1280px;
+
+            margin: 0 auto;
+
+            padding:
+                42px 32px
+                70px;
+        }
+
+
+        /* =========================================================
+           PAGE HEADER
+        ========================================================= */
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+
+        .page-header h1 {
+            font-size: 2rem;
+
+            font-weight: 700;
+
+            letter-spacing: -0.6px;
+
+            color: var(--text-main);
+
+            margin-bottom: 5px;
+        }
+
+
+        .welcome {
+            color: var(--text-muted);
+
+            font-size: 0.9rem;
+        }
+
+
+        /* =========================================================
+           GENERAL SECTIONS
+        ========================================================= */
+
+        .section-header {
+            margin-bottom: 18px;
+        }
+
+
+        .section-header h2 {
+            font-size: 1.15rem;
+
+            font-weight: 600;
+
+            color: var(--text-main);
+
+            margin-bottom: 3px;
+        }
+
+
+        .section-header p {
+            font-size: 0.82rem;
+
+            color: var(--text-muted);
+        }
+
+
+        .wallet-section,
+        .live-rates-section {
+            margin-bottom: 48px;
+        }
+
+
+        /* =========================================================
+           SUMMARY CARDS
+        ========================================================= */
+
+        .summary-grid,
+        .live-rates-grid,
+        .balances-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(240px, 1fr)
+                );
+
+            gap: 16px;
+        }
+
+
+        .summary-grid {
+            margin-bottom: 42px;
+        }
+
+
+        .summary-card,
+        .rate-card {
+            position: relative;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.035),
+                    rgba(255, 255, 255, 0.015)
+                );
+
+            border: 1px solid var(--border);
+
+            border-radius: var(--radius);
+
+            padding: 22px;
+
+            box-shadow: var(--shadow);
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
+        }
+
+
+        .summary-card:hover,
+        .rate-card:hover {
+            transform: translateY(-3px);
+
+            border-color: var(--border-hover);
+
+            background: var(--surface-hover);
+
+            box-shadow:
+                var(--shadow),
+                var(--glow);
+        }
+
+
+        /* =========================================================
+           SUMMARY CARD
+        ========================================================= */
+
+        .summary-card p {
+            color: var(--text-muted);
+
+            font-size: 0.75rem;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.7px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .summary-card p i {
+            color: var(--primary-light);
+
+            margin-right: 5px;
+        }
+
+
+        .summary-card h2 {
+            font-size: 1.85rem;
+
+            font-weight: 700;
+
+            color: var(--text-main);
+
+            margin-bottom: 4px;
+        }
+
+
+        .summary-card > span {
+            color: var(--text-muted);
+
+            font-size: 0.78rem;
+        }
+
+
+        /* =========================================================
+           BALANCE CARDS
+        ========================================================= */
+
+        #balances .summary-card {
+            min-height: 145px;
+        }
+
+
+        /* =========================================================
+           LIVE RATES
+        ========================================================= */
+
+        .live-rates-grid {
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(230px, 1fr)
+                );
+
+            margin-bottom: 12px;
+        }
+
+
+        .rate-card {
+            min-height: 150px;
+        }
+
+
+        .rate-pair {
+            color: var(--text-secondary);
+
+            font-size: 0.8rem;
+
+            font-weight: 600;
+
+            margin-bottom: 12px;
+        }
+
+
+        .rate-value {
+            color: var(--text-main);
+
+            font-size: 1.6rem;
+
+            font-weight: 700;
+
+            letter-spacing: -0.5px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .rate-performance-row {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            font-size: 0.78rem;
+
+            font-weight: 600;
+        }
+
+
+        .neutral {
+            color: var(--text-muted);
+        }
+
+
+        .positive {
+            color: var(--success);
+        }
+
+
+        .negative {
+            color: var(--danger);
+        }
+
+
+        .custom-rate-pair {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .rate-select {
+            flex: 1;
+
+            padding: 9px 10px;
+
+            background: #0b0b11;
+
+            color: var(--text-main);
+
+            border: 1px solid var(--border);
+
+            border-radius: 8px;
+
+            outline: none;
+
+            font-size: 0.8rem;
+
+            cursor: pointer;
+        }
+
+
+        .rate-select:focus {
+            border-color: var(--primary);
+        }
+
+
+        .slash {
+            color: var(--primary-light);
+        }
+
+
+        #ratesUpdated {
+            color: var(--text-muted) !important;
+
+            font-size: 0.75rem !important;
+        }
+
+
+        /* =========================================================
+           PORTFOLIO CHART
+        ========================================================= */
+
+        .portfolio-chart-section {
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.035),
+                    rgba(255, 255, 255, 0.015)
+                );
+
+            border: 1px solid var(--border);
+
+            border-radius: var(--radius);
+
+            padding: 25px;
+
+            margin-bottom: 48px;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .portfolio-chart-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            margin-bottom: 20px;
+        }
+
+
+        .portfolio-chart-header h2 {
+            font-size: 1.15rem;
+
+            font-weight: 600;
+        }
+
+
+        .portfolio-chart-header p {
+            color: var(--text-muted);
+
+            font-size: 0.8rem;
+        }
+
+
+        .portfolio-chart-filters {
+            display: flex;
+
+            gap: 3px;
+
+            padding: 4px;
+
+            background: #0a0a10;
+
+            border: 1px solid var(--border);
+
+            border-radius: 9px;
+        }
+
+
+        .portfolio-range {
+            padding: 6px 12px;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--text-muted);
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 0.75rem;
+
+            font-weight: 600;
+
+            transition: all 0.2s ease;
+        }
+
+
+        .portfolio-range:hover {
+            color: white;
+        }
+
+
+        .portfolio-range.active {
+            background: var(--primary);
+
+            color: white;
+
+            box-shadow:
+                0 3px 12px
+                rgba(118, 87, 255, 0.35);
+        }
+
+
+        .portfolio-chart-summary {
+            margin-bottom: 20px;
+        }
+
+
+        .portfolio-chart-summary span {
+            display: block;
+
+            color: var(--text-muted);
+
+            font-size: 0.75rem;
+
+            margin-bottom: 3px;
+        }
+
+
+        .portfolio-chart-summary strong {
+            font-size: 2.2rem;
+
+            font-weight: 700;
+
+            color: white;
+        }
+
+
+        .portfolio-chart-wrapper {
+            position: relative;
+
+            height: 300px;
+
+            width: 100%;
+        }
+
+
+        #portfolioChartEmpty {
+            color: var(--text-muted) !important;
+
+            font-size: 0.85rem;
+        }
+
+
+        /* =========================================================
+           TRANSACTIONS
+        ========================================================= */
+
+        .transaction-table-container {
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.025),
+                    rgba(255, 255, 255, 0.01)
+                );
+
+            border: 1px solid var(--border);
+
+            border-radius: var(--radius);
+
+            overflow-x: auto;
+
+            margin-bottom: 15px;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .transaction-table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            text-align: left;
+        }
+
+
+        .transaction-table th {
+            background: rgba(255, 255, 255, 0.025);
+
+            padding: 13px 20px;
+
+            color: var(--text-muted);
+
+            font-size: 0.7rem;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.6px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .transaction-table td {
+            padding: 15px 20px;
+
+            color: var(--text-secondary);
+
+            font-size: 0.82rem;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .transaction-table tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        .transaction-table tr:hover {
+            background: rgba(118, 87, 255, 0.04);
+        }
+
+
+        .recent-transactions-button button {
+            padding: 9px 15px;
+
+            background: transparent;
+
+            color: var(--primary-light);
+
+            border: 1px solid rgba(118, 87, 255, 0.4);
+
+            border-radius: 8px;
+
+            font-size: 0.78rem;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: all 0.25s ease;
+        }
+
+
+        .recent-transactions-button button:hover {
+            background: var(--primary);
+
+            color: white;
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 5px 18px
+                rgba(118, 87, 255, 0.25);
+        }
+
+
+        /* =========================================================
+           QUICK ACTIONS
+        ========================================================= */
+
+        .action-card {
+            text-align: left;
+
+            display: flex;
+
+            flex-direction: column;
+
+            min-height: 220px;
+        }
+
+
+        .action-icon {
+            width: 46px;
+
+            height: 46px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                rgba(118, 87, 255, 0.12);
+
+            border:
+                1px solid
+                rgba(118, 87, 255, 0.2);
+
+            color: var(--primary-light);
+
+            font-size: 1.1rem;
+
+            margin-bottom: 18px;
+        }
+
+
+        .action-card h3 {
+            font-size: 1rem;
+
+            font-weight: 600;
+
+            margin-bottom: 5px;
+        }
+
+
+        .action-card span {
+            color: var(--text-muted);
+
+            font-size: 0.78rem;
+
+            margin-bottom: 20px !important;
+        }
+
+
+        .action-card button {
+            margin-top: auto;
+
+            width: 100%;
+
+            padding: 10px;
+
+            background: rgba(118, 87, 255, 0.12);
+
+            color: var(--primary-light);
+
+            border:
+                1px solid
+                rgba(118, 87, 255, 0.25);
+
+            border-radius: 8px;
+
+            font-size: 0.78rem;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: all 0.25s ease;
+        }
+
+
+        .action-card button:hover {
+            background: var(--primary);
+
+            color: white;
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 5px 18px
+                rgba(118, 87, 255, 0.25);
+        }
+
+
+        /* =========================================================
+           MESSAGE
+        ========================================================= */
+
+        #message {
+            text-align: center;
+
+            padding: 12px;
+
+            margin-top: 15px;
+
+            color: var(--text-secondary);
+
+            font-size: 0.8rem;
+
+            font-weight: 500;
+        }
+
+
+        /* =========================================================
+           SCROLLBAR
+        ========================================================= */
+
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+
+
+        ::-webkit-scrollbar-thumb {
+            background: #292936;
+
+            border-radius: 10px;
+        }
+
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1000px) {
+
+            .navbar {
+                padding: 0 25px;
+            }
+
+            .nav-right {
+                gap: 3px;
+            }
+
+            #userEmail {
+                display: none;
+            }
+
+            .nav-right button {
+                padding: 8px 9px;
+            }
+        }
+
+
+        @media (max-width: 768px) {
+
+            .navbar {
+                height: auto;
+
+                min-height: 70px;
+
+                padding: 12px 18px;
+
+                flex-wrap: wrap;
+
+                gap: 12px;
+            }
+
+
+            .nav-right {
+                width: 100%;
+
+                justify-content: center;
+
+                flex-wrap: wrap;
+            }
+
+
+            .nav-right button {
+                font-size: 0.72rem;
+            }
+
+
+            .dashboard {
+                padding:
+                    30px 18px
+                    50px;
+            }
+
+
+            .page-header h1 {
+                font-size: 1.6rem;
+            }
+
+
+            .portfolio-chart-header {
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+
+            .portfolio-chart-filters {
+                width: 100%;
+
+                justify-content: space-between;
+            }
+
+
+            .portfolio-range {
+                flex: 1;
+            }
+
+
+            .portfolio-chart-section {
+                padding: 18px;
+            }
+        }
+
+
+        @media (max-width: 480px) {
+
+            .nav-right button i {
+                display: none;
+            }
+
+
+            .nav-right button {
+                padding:
+                    7px 8px;
+            }
+
+
+            .summary-grid,
+            .live-rates-grid,
+            .balances-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .portfolio-chart-wrapper {
+                height: 240px;
+            }
+
+
+            .transaction-table th,
+            .transaction-table td {
+                padding:
+                    12px 13px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         NAVBAR
+    ========================================================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            <img
+                src="images/forexia-logo.png"
+                alt="Forexia">
+        </div>
+
+        <button class="nav-toggle-btn" id="navToggleBtn" onclick="toggleMobileNav()" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="nav-right" id="navRight">
+
+            <span id="userEmail"></span>
+
+
+            <button onclick="window.location.href='dashboard.html'" class="active-nav">
+                <i class="fas fa-chart-line"></i>
+                Dashboard
+            </button>
+
+
+            <button onclick="window.location.href='wallet.html'">
+                <i class="fas fa-wallet"></i>
+                Wallet
+            </button>
+
+
+            <button onclick="window.location.href='transactions.html'">
+                <i class="fas fa-list"></i>
+                Transactions
+            </button>
+
+
+            <button onclick="window.location.href='profile.html'">
+                <i class="fas fa-user"></i>
+                Profile
+            </button>
+
+
+            <button onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================================================
+         DASHBOARD
+    ========================================================= -->
+
+    <main class="dashboard">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <h1>Overview</h1>
+
+            <p class="welcome">
+                Welcome back! Here is your Forexia account summary.
+            </p>
+
+        </div>
+
+
+        <!-- LIVE SYNC STATUS BAR -->
+
+        <div class="live-sync-bar">
+
+            <div class="live-indicator">
+                <span class="live-pulse"></span>
+                <span id="liveStatusText">Live Market Feed Connected</span>
+                <span style="color:var(--text-secondary);font-size:12px;font-weight:400;" id="ratesUpdated">Updating rates...</span>
+            </div>
+
+            <button class="sync-btn" id="syncNowBtn" onclick="refreshDashboardLive()">
+                <i class="fas fa-sync-alt"></i>
+                <span>Sync Now</span>
+            </button>
+
+        </div>
+
+
+        <!-- =====================================================
+             SUMMARY
+        ====================================================== -->
+
+        <section class="summary-grid">
+
+
+            <div class="summary-card">
+
+                <p>
+                    <i class="fas fa-chart-pie"></i>
+                    Total Portfolio
+                </p>
+
+                <h2 id="totalPortfolio">
+                    Calculating...
+                </h2>
+
+                <span>
+                    Approximate value in INR
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <p>
+                    <i class="fas fa-globe"></i>
+                    Currencies
+                </p>
+
+                <h2 id="currencyCount">
+                    0
+                </h2>
+
+                <span>
+                    Active currencies in wallet
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <p>
+                    <i class="fas fa-exchange-alt"></i>
+                    Transactions
+                </p>
+
+                <h2 id="transactionCount">
+                    0
+                </h2>
+
+                <span>
+                    Total wallet activity
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <p>
+                    <i class="fas fa-wave-square"></i>
+                    Forex Stream
+                </p>
+
+                <h2 id="forexMarketStatus" style="font-size: 1.45rem; color: #22c55e;">
+                    Live Feed
+                </h2>
+
+                <span id="forexMarketSub">
+                    Frankfurter ECB live quotes
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =====================================================
+             BALANCES
+        ====================================================== -->
+
+        <section class="wallet-section">
+
+            <div class="section-header">
+
+                <h2>Your Balances</h2>
+
+                <p>
+                    Money available in each currency
+                </p>
+
+            </div>
+
+
+            <div
+                id="balances"
+                class="balances-grid">
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             LIVE RATES
+        ====================================================== -->
+
+        <section class="live-rates-section">
+
+            <div class="section-header">
+
+                <h2>
+                    <i
+                        class="fas fa-bolt"
+                        style="color: var(--primary-light);">
+                    </i>
+
+                    Live Exchange Rates
+                </h2>
+
+                <p>
+                    Current global currency trends
+                </p>
+
+            </div>
+
+
+            <div class="live-rates-grid">
+
+
+                <!-- USD / INR -->
+
+                <div class="rate-card">
+
+                    <div class="rate-pair">
+                        USD / INR
+                    </div>
+
+                    <div
+                        id="rateUSDINR"
+                        class="rate-value">
+                        Loading...
+                    </div>
+
+                    <div class="rate-performance-row">
+
+                        <span
+                            id="trendUSDINR"
+                            class="rate-trend neutral">
+
+                            <i class="fas fa-minus"></i>
+
+                        </span>
+
+                        <span
+                            id="USD_INR_performance"
+                            class="rate-performance neutral">
+
+                            0.00%
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EUR / INR -->
+
+                <div class="rate-card">
+
+                    <div class="rate-pair">
+                        EUR / INR
+                    </div>
+
+                    <div
+                        id="rateEURINR"
+                        class="rate-value">
+                        Loading...
+                    </div>
+
+                    <div class="rate-performance-row">
+
+                        <span
+                            id="trendEURINR"
+                            class="rate-trend neutral">
+
+                            <i class="fas fa-minus"></i>
+
+                        </span>
+
+                        <span
+                            id="EUR_INR_performance"
+                            class="rate-performance neutral">
+
+                            0.00%
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- GBP / INR -->
+
+                <div class="rate-card">
+
+                    <div class="rate-pair">
+                        GBP / INR
+                    </div>
+
+                    <div
+                        id="rateGBPINR"
+                        class="rate-value">
+                        Loading...
+                    </div>
+
+                    <div class="rate-performance-row">
+
+                        <span
+                            id="trendGBPINR"
+                            class="rate-trend neutral">
+
+                            <i class="fas fa-minus"></i>
+
+                        </span>
+
+                        <span
+                            id="GBP_INR_performance"
+                            class="rate-performance neutral">
+
+                            0.00%
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CUSTOM RATE -->
+
+                <div class="rate-card custom-rate-card">
+
+                    <div class="custom-rate-pair">
+
+                        <select
+                            id="customFromCurrency"
+                            class="rate-select">
+
+                            <option value="USD">
+                                USD
+                            </option>
+
+                            <option value="EUR">
+                                EUR
+                            </option>
+
+                            <option value="GBP">
+                                GBP
+                            </option>
+
+                            <option value="INR">
+                                INR
+                            </option>
+
+                        </select>
+
+
+                        <span class="slash">
+                            <i class="fas fa-random"></i>
+                        </span>
+
+
+                        <select
+                            id="customToCurrency"
+                            class="rate-select">
+
+                            <option value="EUR">
+                                EUR
+                            </option>
+
+                            <option value="USD">
+                                USD
+                            </option>
+
+                            <option value="GBP">
+                                GBP
+                            </option>
+
+                            <option value="INR">
+                                INR
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div
+                        id="customExchangeRate"
+                        class="rate-value">
+
+                        Loading...
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <p id="ratesUpdatedLegacy" style="display:none;"></p>
+
+        </section>
+
+
+        <!-- =====================================================
+             LIVE ANALYTICS & CHARTS DASHBOARD
+        ====================================================== -->
+
+        <!-- Primary Analytics Grid: Portfolio Growth + Asset Allocation -->
+        <section class="analytics-grid">
+
+            <!-- Card 1: Portfolio Growth & Balance History -->
+            <div class="chart-card">
+
+                <div class="chart-header">
+                    <div>
+                        <h3>
+                            <i class="fas fa-chart-line" style="color: var(--primary);"></i>
+                            Portfolio Valuation Analytics
+                        </h3>
+                        <p>Total multi-currency net worth over time in INR</p>
+                    </div>
+
+                    <div class="portfolio-chart-filters">
+                        <button type="button" class="portfolio-range active" data-range="7D" onclick="changePortfolioRange('7D')">7D</button>
+                        <button type="button" class="portfolio-range" data-range="1M" onclick="changePortfolioRange('1M')">1M</button>
+                        <button type="button" class="portfolio-range" data-range="3M" onclick="changePortfolioRange('3M')">3M</button>
+                        <button type="button" class="portfolio-range" data-range="1Y" onclick="changePortfolioRange('1Y')">1Y</button>
+                        <button type="button" class="portfolio-range" data-range="ALL" onclick="changePortfolioRange('ALL')">ALL</button>
+                    </div>
+                </div>
+
+                <div class="chart-summary-stat">
+                    <span class="stat-label">Current Total Valuation</span>
+                    <div style="display:flex; align-items:baseline; gap:12px;">
+                        <strong id="portfolioChartValue" class="stat-value">₹0.00</strong>
+                        <span id="portfolioChartChange" class="rate-performance positive">Live</span>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper">
+                    <canvas id="portfolioChart"></canvas>
+                    <div id="portfolioChartEmpty" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:none; text-align:center; color:var(--text-muted);">
+                        <i class="fas fa-chart-area" style="font-size: 2rem; margin-bottom: 8px; opacity: 0.5;"></i>
+                        <p>Not enough transaction history yet.<br><small>Deposit or convert funds to generate live trends.</small></p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Card 2: Asset Allocation Breakdown -->
+            <div class="chart-card">
+
+                <div class="chart-header">
+                    <div>
+                        <h3>
+                            <i class="fas fa-chart-pie" style="color: #22c55e;"></i>
+                            Asset Allocation
+                        </h3>
+                        <p>Current holdings breakdown by currency</p>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper" style="min-height: 200px; height: 210px;">
+                    <canvas id="allocationChart"></canvas>
+                    <div id="allocationChartEmpty" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:none; text-align:center; color:var(--text-muted);">
+                        <p>No active wallet balances</p>
+                    </div>
+                </div>
+
+                <div id="allocationLegend" class="allocation-legend">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Secondary Analytics Grid: Cash Flow + Market Trend -->
+        <section class="secondary-charts-grid">
+
+            <!-- Card 3: Inflow vs Outflow Cash Flow -->
+            <div class="chart-card">
+
+                <div class="chart-header">
+                    <div>
+                        <h3>
+                            <i class="fas fa-money-bill-transfer" style="color: #38bdf8;"></i>
+                            Cash Flow Dynamics
+                        </h3>
+                        <p>Inbound (deposits/received) vs outbound (withdrawn/sent)</p>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper" style="min-height: 230px; height: 230px;">
+                    <canvas id="cashflowChart"></canvas>
+                    <div id="cashflowChartEmpty" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:none; text-align:center; color:var(--text-muted);">
+                        <p>No deposit/withdrawal transactions recorded yet.</p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Card 4: Currency Exchange Benchmark -->
+            <div class="chart-card">
+
+                <div class="chart-header">
+                    <div>
+                        <h3>
+                            <i class="fas fa-arrow-trend-up" style="color: #f59e0b;"></i>
+                            Forex Market Benchmark
+                        </h3>
+                        <p>Current live relative strength against INR</p>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper" style="min-height: 230px; height: 230px;">
+                    <canvas id="forexTrendChart"></canvas>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             RECENT TRANSACTIONS
+        ====================================================== -->
+
+        <section class="wallet-section">
+
+
+            <div class="section-header">
+
+                <h2>
+                    Recent Transactions
+                </h2>
+
+                <p>
+                    Your latest wallet activity
+                </p>
+
+            </div>
+
+
+            <div class="transaction-table-container">
+
+                <table class="transaction-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Details
+                            </th>
+
+                            <th>
+                                Currency
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="recentTransactions">
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                style="
+                                    text-align:center;
+                                    color:var(--text-muted);
+                                ">
+
+                                Loading transactions...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="recent-transactions-button">
+
+                <button
+                    onclick="window.location.href='transactions.html'">
+
+                    View All Transactions
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             QUICK ACTIONS
+        ====================================================== -->
+
+        <section
+            class="wallet-section"
+            style="margin-top:60px;">
+
+
+            <div
+                class="section-header"
+                style="text-align:center;">
+
+                <h2>
+                    Quick Actions
+                </h2>
+
+                <p>
+                    Manage your funds seamlessly
+                </p>
+
+            </div>
+
+
+            <div class="summary-grid">
+
+
+                <!-- WALLET -->
+
+                <div class="summary-card action-card">
+
+                    <div class="action-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+
+                    <h3>
+                        My Wallet
+                    </h3>
+
+                    <span>
+                        View and manage currencies
+                    </span>
+
+                    <button
+                        onclick="window.location.href='wallet.html'">
+
+                        Open Wallet
+
+                    </button>
+
+                </div>
+
+
+                <!-- DEPOSIT -->
+
+                <div class="summary-card action-card">
+
+                    <div class="action-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+
+                    <h3>
+                        Deposit
+                    </h3>
+
+                    <span>
+                        Add money to your wallet
+                    </span>
+
+                    <button
+                        onclick="window.location.href='deposit.html'">
+
+                        Deposit Money
+
+                    </button>
+
+                </div>
+
+
+                <!-- WITHDRAW -->
+
+                <div class="summary-card action-card">
+
+                    <div class="action-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+
+                    <h3>
+                        Withdraw
+                    </h3>
+
+                    <span>
+                        Withdraw to bank account
+                    </span>
+
+                    <button
+                        onclick="window.location.href='withdraw.html'">
+
+                        Withdraw Money
+
+                    </button>
+
+                </div>
+
+
+                <!-- EXCHANGE -->
+
+                <div class="summary-card action-card">
+
+                    <div class="action-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+
+                    <h3>
+                        Exchange
+                    </h3>
+
+                    <span>
+                        Convert at live rates
+                    </span>
+
+                    <button
+                        onclick="window.location.href='exchange.html'">
+
+                        Exchange Currency
+
+                    </button>
+
+                </div>
+
+
+                <!-- SEND MONEY -->
+
+                <div class="summary-card action-card">
+
+                    <div class="action-icon">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+
+                    <h3>
+                        Send Money
+                    </h3>
+
+                    <span>
+                        Transfer to Forexia users
+                    </span>
+
+                    <button
+                        onclick="window.location.href='send-money.html'">
+
+                        Send Money
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- GLOBAL MESSAGE -->
+
+        <p id="message"></p>
+
+
+    </main>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script src="js/api.js"></script>
+
+    <script src="js/dashboard.js"></script>
+
+
+</body>
+
+</html>

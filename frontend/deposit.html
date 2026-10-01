@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Forexia - Deposit</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        <img src="images/forexia-logo.png" alt="Forexia">
+    </div>
+
+    <button class="nav-toggle-btn" onclick="const n=document.getElementById('navRight'); if(n) n.classList.toggle('mobile-open');" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="nav-right" id="navRight">
+
+        <span id="userEmail"></span>
+
+        <button onclick="window.location.href='dashboard.html'">
+            <i class="fas fa-chart-line"></i>
+            Dashboard
+        </button>
+
+        <button onclick="window.location.href='wallet.html'">
+            <i class="fas fa-wallet"></i>
+            Wallet
+        </button>
+
+        <button onclick="window.location.href='transactions.html'">
+            <i class="fas fa-list"></i>
+            Transactions
+        </button>
+
+        <button onclick="window.location.href='profile.html'">
+            <i class="fas fa-user"></i>
+            Profile
+        </button>
+
+        <button onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+
+
+<main class="dashboard">
+
+    <h1>
+        Deposit Money
+    </h1>
+
+    <p class="welcome">
+        Add money to your Forexia wallet
+    </p>
+
+
+    <section class="actions-grid">
+
+        <div class="card">
+
+            <h2>
+                Deposit
+            </h2>
+
+            <p>
+                Select a currency and enter the amount
+            </p>
+
+
+            <select id="depositCurrency">
+
+                <option value="INR">INR</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+
+            </select>
+
+
+            <input
+                type="number"
+                id="depositAmount"
+                placeholder="Amount"
+                min="0"
+                step="0.01"
+            >
+
+
+            <button onclick="deposit()">
+                Deposit
+            </button>
+
+
+            <p id="message"></p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="js/api.js"></script>
+<script src="js/deposit.js"></script>
+
+</body>
+
+</html>
